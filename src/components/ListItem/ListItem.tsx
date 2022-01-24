@@ -122,8 +122,8 @@ const ListItem: React.FC<Props> = ({ item, index, updateField }) => {
 					registered:
 				</PropertyName>
 				{' '}
-				{item.registered}
-				<input type="datetime-local" value={item.registered} onChange={e => updateLocalState(e, 'date')} />
+				{item.registered.slice(0, 10)}
+				<input type="date" defaultValue={item.registered.slice(0, 10)} onChange={e => updateLocalState(e, 'registered')} />
 			</PropertyWrapper>
 			<button type="button" onClick={() => updateField(localUserState, index)}>
 				<span role="img" aria-label="update changes">
