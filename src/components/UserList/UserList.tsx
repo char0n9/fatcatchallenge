@@ -1,18 +1,12 @@
 import React from 'react';
-import { useState, useEffect, CSSProperties } from 'react';
+import { useState, CSSProperties } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import ListItem from '../ListItem/ListItem';
+import Upload from '../Upload/Upload';
 
 export type Item = {
-        'id': string,
-        'isActive': boolean,
-        'picture': string,
-        'age': number,
-        'name': string,
-        'email': string,
-        'address': string,
-        'about': string,
-        'registered': string,
+
+		[key: string] : string | boolean | number
 }
 
 const UserList: React.FC = () => {
@@ -30,41 +24,22 @@ const UserList: React.FC = () => {
 		</div>
 	);
 
-	// mimic API call
-	const getData = (): Promise<void> =>
-		fetch('data.json',
-			{
-				headers: {
-
-					'Content-Type': 'application/json',
-
-					Accept: 'application/json',
-
-				},
-			})
-			.then((response) => {
-				return response.json();
-			})
-			.then((myJson) => {
-				// console.log(myJson);
-				setData(myJson);
-			});
-
-	useEffect(() => {
-		getData();
-	}, []);
+	const uploadHandler = (data:string):void => setData(JSON.parse(data));
 	return (
+		<div>
+			<Upload uploadHandler={uploadHandler} />
 
-		<List
-			className="List"
-			height={window.innerHeight - 10}
-			itemData={data}
-			itemCount={data.length}
-			itemSize={150}
-			width="100%"
-		>
-			{Row}
-		</List>
+			<List
+				className="List"
+				height={window.innerHeight ? window.innerHeight - 10 : 100}
+				itemData={data}
+				itemCount={data.length}
+				itemSize={275}
+				width="100%"
+			>
+				{Row}
+			</List>
+		</div>
 	);
 };
 
